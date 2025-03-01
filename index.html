@@ -1,0 +1,136 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro to the Fetch API</title>
+    <script src="https://kit.fontawesome.com/cea6dd34a2.js" crossorigin="anonymous"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+       body{
+
+        background: linear-gradient(rgba(0,0,0,0.2),rgb(9, 0, 186)), url(image/img.jpg);
+        font-family:  "poppins", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-position: center;
+        background-size:cover;
+       }
+
+       .presentations{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+       }
+
+       .presentation{
+        background-color: #ececec;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+        height: 400px;
+        width: 300px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.7);
+        border-radius: 12px;
+       
+       }
+
+       .presentation img{
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+       }
+
+       buttons{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+       }
+       button{
+        background-color: red;
+        border: 0;
+        border-radius: 7px;
+        color: #fff;
+        font-size: 19;
+        padding: 9;
+        margin: 9px;
+        width:295px;
+        transition: .5s;
+        cursor: pointer;
+        
+       }
+
+       button:hover{
+        background:rgb(11, 0, 222);
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+       }
+
+       .buttons .fa-solid{
+        margin-right: 12px;
+       }
+       
+
+    </style>
+</head>
+<body>
+
+    <div class="presentations">
+        <div class="presentation" id="cat_presentation">
+            <p>Random Cat </p>
+        </div>
+        <div class="presentation" id="dog_presentation">
+            <p>Random Dog </p>
+        </div>
+    </div>
+    
+    <div class="buttons">
+        <button id="cat_btn"><i class="fa-solid fa-cat"></i>Get Cat </button>
+        <button id="dog_btn"><i class="fa-solid fa-dog"></i>Get Dog</button>
+    </div>
+    
+
+   
+    <script>
+
+        const  cat_presentation = document.getElementById('cat_presentation');
+        const  dog_presentation = document.getElementById('dog_presentation');
+        const  cat_btn = document.getElementById('cat_btn');  
+        const  dog_btn = document.getElementById('dog_btn');
+
+        cat_btn.addEventListener('click', getRandomCat);
+        dog_btn.addEventListener('click', getRandomDog);
+
+
+
+        function getRandomCat() {
+	fetch('https://cdn2.thecatapi.com/images/MTU2MDA2Mg.jpg')
+		.then( res => res.json() )
+		.then( data => {
+			cat_presentation.innerHTML = `<img src="${data.url}"/>`;
+		});
+}
+
+        function getRandomDog() {
+	fetch( 'https://random.dog/woof.json')
+		.then( res => res.json() )
+		.then( data => {
+			if ( data.url.includes( '.mp4' ) ) {
+				getRandomDog();
+			} else {
+				dog_presentation.innerHTML = `<img src="${data.url}" />`;
+			}
+		} );
+}
+
+        
+
+
+        
+    
+    </script>
+</body>
+</html>
